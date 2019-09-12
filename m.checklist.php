@@ -28,7 +28,7 @@
 	</center>
 	<div class="checklist">
 <?php 
-	$sql = "SELECT A.*, DATE_FORMAT(A.metacreateddate, '%d/%m/%Y') AS metacreateddate, B.formname, B.postformname, B.name AS categoryname
+	$sql = "SELECT A.*, DATE_FORMAT(A.metacreateddate, '%d/%m/%Y') AS metacreateddate, B.formname AS mainforname, B.postformname, B.name AS categoryname
 			FROM {$_SESSION['DB_PREFIX']}subcategory A
 			INNER JOIN {$_SESSION['DB_PREFIX']}category B
 			ON B.id = A.categoryid
@@ -44,16 +44,26 @@
 				
 <?php
 			} else {
-?>	
-		<form method="post" enctype="multipart/form-data" action="<?php echo $member['postformname']; ?>">
-				
+				if ($member['formpostname'] != null && $member['formpostname'] != "") {
+?>
+		<form method="post" enctype="multipart/form-data" action="<?php echo $member['formpostname']; ?>">
 <?php
+				} else {
+?>
+		<form method="post" enctype="multipart/form-data" action="<?php echo $member['postformname']; ?>">
+<?php
+				}
 			}
 ?>	
 			<div class="mobiletitle"><?php echo $member['categoryname']; ?></div>
 
 <?php
-			include($member['formname']);
+			if ($member['formname'] != null && $member['formname'] != "") {
+				include($member['formname']);
+				
+			} else {
+				include($member['mainforname']);
+			}
 		}
 	}
 ?>
@@ -100,7 +110,7 @@
 			function() {
 		      	$('.sigPad').signaturePad(
 		      			{
-		      			    drawBezierCurves:true,
+		      				drawBezierCurves:true,
 		      				validateFields: false
 		      			}
 					);

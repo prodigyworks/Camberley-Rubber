@@ -26,6 +26,42 @@
 				AND WEEK(A.datestamp) = WEEK(CURDATE())
 				AND B.type = 'A'
 				UNION ALL
+				SELECT B.id, A.status, B.name, B.location, DATE_FORMAT(NOW(),'31 Dec %Y') AS due
+				FROM {$_SESSION['DB_PREFIX']}checklist A
+				INNER JOIN {$_SESSION['DB_PREFIX']}subcategory B
+				ON B.id = A.subcategoryid
+				INNER JOIN {$_SESSION['DB_PREFIX']}category C
+				ON C.id = B.categoryid
+				AND C.sequence = 'Y'
+				WHERE B.categoryid = $id
+				AND YEAR(A.datestamp) = YEAR(CURDATE())
+				AND MONTH(A.datestamp) = MONTH(CURDATE())
+				AND B.type = 'A'
+				UNION ALL
+				SELECT B.id, A.status, B.name, B.location, DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 3 YEAR),'31 Dec %Y') AS due
+				FROM {$_SESSION['DB_PREFIX']}checklist A
+				INNER JOIN {$_SESSION['DB_PREFIX']}subcategory B
+				ON B.id = A.subcategoryid
+				INNER JOIN {$_SESSION['DB_PREFIX']}category C
+				ON C.id = B.categoryid
+				AND C.sequence = '3'
+				WHERE B.categoryid = $id
+				AND YEAR(A.datestamp) = YEAR(CURDATE())
+				AND MONTH(A.datestamp) = MONTH(CURDATE())
+				AND B.type = 'A'
+				UNION ALL
+				SELECT B.id, A.status, B.name, B.location, DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 5 YEAR),'31 Dec %Y') AS due
+				FROM {$_SESSION['DB_PREFIX']}checklist A
+				INNER JOIN {$_SESSION['DB_PREFIX']}subcategory B
+				ON B.id = A.subcategoryid
+				INNER JOIN {$_SESSION['DB_PREFIX']}category C
+				ON C.id = B.categoryid
+				AND C.sequence = '5'
+				WHERE B.categoryid = $id
+				AND YEAR(A.datestamp) = YEAR(CURDATE())
+				AND MONTH(A.datestamp) = MONTH(CURDATE())
+				AND B.type = 'A'
+				UNION ALL
 				SELECT B.id, A.status, B.name, B.location, DATE_FORMAT(LAST_DAY(NOW()), '%d %M %Y') AS due
 				FROM {$_SESSION['DB_PREFIX']}checklist A
 				INNER JOIN {$_SESSION['DB_PREFIX']}subcategory B
@@ -33,6 +69,18 @@
 				INNER JOIN {$_SESSION['DB_PREFIX']}category C
 				ON C.id = B.categoryid
 				AND C.sequence = 'M'
+				WHERE B.categoryid = $id
+				AND YEAR(A.datestamp) = YEAR(CURDATE())
+				AND MONTH(A.datestamp) = MONTH(CURDATE())
+				AND B.type = 'A'
+				UNION ALL
+				SELECT B.id, A.status, B.name, B.location, DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 6 MONTH), '%d %M %Y') AS due
+				FROM {$_SESSION['DB_PREFIX']}checklist A
+				INNER JOIN {$_SESSION['DB_PREFIX']}subcategory B
+				ON B.id = A.subcategoryid
+				INNER JOIN {$_SESSION['DB_PREFIX']}category C
+				ON C.id = B.categoryid
+				AND C.sequence = '6'
 				WHERE B.categoryid = $id
 				AND YEAR(A.datestamp) = YEAR(CURDATE())
 				AND MONTH(A.datestamp) = MONTH(CURDATE())
@@ -47,6 +95,9 @@
 			    	$rows++;
 			    }
 			}
+			
+		} else {
+			logError(mysql_error() . " $sql");
 		}
 		
 		return $rows;

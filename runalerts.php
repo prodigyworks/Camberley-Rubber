@@ -5,7 +5,7 @@
 	
    	sendRoleMessage("ALERT", "Daily alert task schedule", "Information: Alerts task schedule run at " . date("d/m/Y"));
     	
-	require_once("db-backup.php");
+//	require_once("db-backup.php");
 	
    	/********************************************************************* END OF SCHEDULE **************************************/
 	$qry = "UPDATE {$_SESSION['DB_PREFIX']}siteconfig SET lastschedulerun = CURDATE(), metamodifieddate = NOW(), metamodifieduserid = " . getLoggedOnMemberID() . "";

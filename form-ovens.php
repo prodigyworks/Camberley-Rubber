@@ -94,13 +94,13 @@
 	<tr>
 		<td>Set Temperature</td>
 		<td>
-			<input type="text" id="settemperature" name="settemperature" />
+			<input type="number" id="settemperature" name="settemperature" />
 		</td>
 	</tr>
 	<tr>
 		<td>Actual Temperature</td>
 		<td>
-			<input type="text" id="actualtemperature" name="actualtemperature" />
+			<input type=""number"" id="actualtemperature" name="actualtemperature" />
 		</td>
 	</tr>
 </table>

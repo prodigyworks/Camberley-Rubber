@@ -1,23 +1,32 @@
+<?php
+//Include database connection details
+require_once('system-config.php');
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<title>Camberley Rubber</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<link rel="shortcut icon" href="favicon.ico">
 
-<?php 
-	//Include database connection details
-	require_once('system-config.php');
-?>
+	<link href="css/style-19052014.css" rel="stylesheet" type="text/css" />
+	<!--
+    <link href="css/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css" />
+     -->
+	<link href="css/jquery-ui.css" rel="stylesheet" type="text/css" />
+	<link href="css/dcmegamenu.css" rel="stylesheet" type="text/css" />
+	<link href="css/skins/white.css" rel="stylesheet" type="text/css" />
 
-<link href="css/style-19052014.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="css/jquery-ui-1.8.21.custom.css" type="text/css" />
 
-<script src="js/jquery.min.js"></script>
-<script src="js/jquery-ui.min.js"></script>
-<script src="js/datatechniques.js" language="javascript" ></script> 
-<title>DTi - Project Tracker</title>
-<script>
-	var autoLoad = false;
-</script>
+	<script src="js/jquery-1.8.0.min.js" type="text/javascript"></script>
+	<script src="js/jquery.min.js" type="text/javascript"></script>
+	<script src="js/jquery-ui.min.js" type="text/javascript"></script>
+	<script src='js/jquery.hoverIntent.minified.js' type='text/javascript'></script>
+	<script src='js/jquery.dcmegamenu.1.3.3.js' type='text/javascript'></script>
+	<script src="js/oraclelogs.js" language="javascript" ></script>
 </head>
 <body>
 	<?php

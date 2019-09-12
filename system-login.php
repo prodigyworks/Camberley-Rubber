@@ -1,4 +1,5 @@
 <?php 
+	require_once("liquibase.php");
 	require_once("system-header.php"); 
 	require_once("confirmdialog.php");
 	

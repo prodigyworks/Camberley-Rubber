@@ -82,6 +82,18 @@
 				'label' 	 => 'Type'
 			),			
 			array(
+					'name'       => 'formname',
+					'length' 	 => 40,
+					'required'	 => false,
+					'label' 	 => 'Form'
+			),
+			array(
+					'name'       => 'formpostname',
+					'length' 	 => 40,
+					'required'	 => false,
+					'label' 	 => 'Form Post'
+			),
+				array(
 				'name'       => 'imageid',
 				'type'		 => 'IMAGE',
 				'required'   => false,

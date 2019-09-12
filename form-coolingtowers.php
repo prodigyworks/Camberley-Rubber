@@ -24,22 +24,22 @@
 	<tr>
 		<td>Meter Reading</td>
 		<td>
-			<input id="meterreading" name="meterreading" value="<?php echo $member['meterreading']; ?>" size=20></input>
+			<input type="text" id="meterreading" name="meterreading" value="<?php echo $member['meterreading']; ?>" size=20></input>
 		</td>
 	</tr>
 	<tr>
 		<td>1. PH</td>
 		<td>
-			<input id="pump1ph" name="pump1ph" value="<?php echo $member['pump1ph']; ?>" size=20></input>
+			<input type="text" id="pump1ph" name="pump1ph" value="<?php echo $member['pump1ph']; ?>" size=20></input>
 		</td>
 	</tr>
 	<tr>
 		<td>2. TDS</td>
 		<td colspan=3>
 			<label>System</label>
-			<input id="pump2tdssystem" name="pump2tdssystem" value="<?php echo $member['pump2tdssystem']; ?>" size=20></input>
+			<input type="text" id="pump2tdssystem" name="pump2tdssystem" value="<?php echo $member['pump2tdssystem']; ?>" size=20></input>
 			<label>&nbsp;&nbsp;&nbsp;&nbsp;Make Up</label>
-			<input id="pump2tdsmakeup" name="pump2tdsmakeup" value="<?php echo $member['pump2tdsmakeup']; ?>" size=20></input>
+			<input type="text" id="pump2tdsmakeup" name="pump2tdsmakeup" value="<?php echo $member['pump2tdsmakeup']; ?>" size=20></input>
 		</td>
 	</tr>
 	<tr>
@@ -69,37 +69,37 @@
 	<tr>
 		<td>5. Pond Temp (Degrees Celcius)</td>
 		<td>
-			<input id="pump5pondtemp" name="pump5pondtemp" value="<?php echo $member['pump5pondtemp']; ?>" size=15></input>
+			<input type="text" id="pump5pondtemp" name="pump5pondtemp" value="<?php echo $member['pump5pondtemp']; ?>" size=15></input>
 		</td>
 	</tr>
 	<tr>
 		<td>6. System Pressure (Bar)</td>
 		<td>
-			<input id="pump6systempressure" name="pump6systempressure" value="<?php echo $member['pump6systempressure']; ?>" size=15></input>
+			<input type="text" id="pump6systempressure" name="pump6systempressure" value="<?php echo $member['pump6systempressure']; ?>" size=15></input>
 		</td>
 	</tr>
 	<tr>
 		<td>7. Hardness (PPM)</td>
 		<td>
-			<input id="hardness" name="hardness" value="<?php echo $member['hardness'] ?>" size=15></input>
+			<input type="number" id="hardness" name="hardness" value="<?php echo $member['hardness'] ?>" size=15></input>
 		</td>
 	</tr>
 	<tr>
 		<td>8. Bromine (PPM)</td>
 		<td>
-			<input id="bromine" name="bromine" value="<?php echo $member['bromine'] ?>" size=15></input>
+			<input type="text" id="bromine" name="bromine" value="<?php echo $member['bromine'] ?>" size=15></input>
 		</td>
 	</tr>
 	<tr>
-		<td>9. C16 (Ltrs)</td>
+		<td>9. 47X2 (Ltrs)</td>
 		<td>
-			<input id="c16" name="c16" value="<?php echo $member['c16'] ?>" size=15></input>
+			<input type="text" id="c16" name="c16" value="<?php echo $member['c16'] ?>" size=15></input>
 		</td>
 	</tr>
 	<tr>
-		<td>10. C31 (Ltrs)</td>
+		<td>10. 3201 (Ltrs)</td>
 		<td>
-			<input id="c31" name="c31" value="<?php echo $member['c31'] ?>" size=15></input>
+			<input type="text" id="c31" name="c31" value="<?php echo $member['c31'] ?>" size=15></input>
 		</td>
 	</tr>
 	<tr>

@@ -95,7 +95,90 @@
 				AND YEAR(A.datestamp) = YEAR(NOW())
 				AND MONTH(A.datestamp) = MONTH(NOW())"
 			);
+
+		if ($id != null) {
+			return $id;
+		}
+		
+		$sql = "SELECT A.id, A.startdate, A.sequence, A.name
+				FROM {$_SESSION['DB_PREFIX']}category A
+				INNER JOIN {$_SESSION['DB_PREFIX']}subcategory B
+				ON B.categoryid = A.id
+				WHERE B.id = $subcategoryid
+				AND A.sequence IN ( 'Y', '6', '3', '5')";
 			
+		$result = mysql_query($sql);
+		$today = strtotime("now");
+		$id = null;
+		
+		if ($result) {
+			while (($member = mysql_fetch_assoc($result))) {
+				$startdate = strtotime($member['startdate']);
+				$hid = $member['id'];
+				$sequence = $member['sequence'];
+					
+				if ($sequence == "Y") {
+					$calc = "+1 year";
+		
+				} else if ($sequence == "6") {
+					$calc = "+6 months";
+		
+				} else if ($sequence == "3") {
+					$calc = "+3 years";
+		
+				} else if ($sequence == "5") {
+					$calc = "+5 years";
+		
+				} else {
+					continue;
+				}
+					
+				for (; ;) {
+					$fromdate = $startdate;
+					$todate = strtotime("+ 1 year",  $startdate);
+		
+					if ($startdate <= $today && $todate >= $today) {
+						$sql = "SELECT B.id
+								FROM {$_SESSION['DB_PREFIX']}checklist B
+								INNER JOIN {$_SESSION['DB_PREFIX']}subcategory C
+								ON C.id = B.subcategoryid
+								INNER JOIN {$_SESSION['DB_PREFIX']}category D
+								ON D.id = C.categoryid
+								WHERE D.id = $hid
+								AND C.id = $subcategoryid
+								AND C.type = 'A'";
+							
+						$itemresult = mysql_query($sql);
+							
+						if ($itemresult) {
+							$found = false;
+		
+							while (($itemmember = mysql_fetch_assoc($itemresult))) {
+								$found = true;
+								$id = $itemmember['id'];
+								
+								break;
+							}
+		
+							if (! $found) {
+								$id = null;
+							}
+								
+						} else {
+							logError($sql . " " . mysql_error());
+						}
+							
+						break;
+					}
+		
+					$startdate = $todate;
+				}
+			}
+		
+		} else {
+			logError($sql . " " . mysql_error());
+		}
+		
 		return $id;
 	}
 	

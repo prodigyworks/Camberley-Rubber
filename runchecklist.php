@@ -49,7 +49,89 @@
 				AND C.type = 'A'
 			)"
 		);
+	
+	$sql = "SELECT id, startdate, sequence, name
+			FROM {$_SESSION['DB_PREFIX']}category A
+			WHERE sequence IN ( 'Y', '6', '3', '5')";
+			
+	$result = mysql_query($sql);
+	$today = strtotime("now");
+	
+	if ($result) {
+		while (($member = mysql_fetch_assoc($result))) {
+			$startdate = strtotime($member['startdate']);
+			$id = $member['id'];
+			$sequence = $member['sequence'];
+			
+			if ($sequence == "Y") {
+				$calc = "+1 year";
+
+			} else if ($sequence == "6") {
+				$calc = "+6 months";
+
+			} else if ($sequence == "3") {
+				$calc = "+3 years";
+
+			} else if ($sequence == "5") {
+				$calc = "+5 years";
+						
+			} else {
+				continue;
+			}
+			
+			echo "<h1>Name : $name Seq : $sequence</h1>";
+			
+			for (; ;) {
+				$fromdate = $startdate;
+				$todate = strtotime($calc,  $startdate);
+				
+				echo "Today [$today] - FROM " . date("Y-m-d", $fromdate) . " - " . date("Y-m-d", $todate);
+				 
+				if ($startdate <= $today && $todate >= $today) {
+					echo " - BREAK<br>";
+					
+					$sql = "SELECT B.id
+							FROM {$_SESSION['DB_PREFIX']}checklist B
+							INNER JOIN {$_SESSION['DB_PREFIX']}subcategory C
+							ON C.id = B.subcategoryid
+							INNER JOIN {$_SESSION['DB_PREFIX']}category D
+							ON D.id = C.categoryid
+							WHERE D.id = $id
+							AND C.type = 'A'";
+					
+					$itemresult = mysql_query($sql);
+					
+					if ($itemresult) {
+						$found = false;
+						
+						while (($itemmember = mysql_fetch_assoc($itemresult))) {
+							echo "FOUND : {$itemmember['id']}<br>";
+							$found = true;
+							
+							break;
+						}
+						
+						if (! $found) {
+							populateCheckList($id);
+						}
+					
+					} else {
+						logError($sql . " " . mysql_error());
+					}
+					
+					break;
+				}
+				
+				echo "<br>";
+				
+				$startdate = $todate;
+			}
+		}
 		
+	} else {
+		logError($sql . " " . mysql_error());
+	}
+			
 	mysql_query("COMMIT");
 	
 	function checkPeriod($qry) {
@@ -78,6 +160,8 @@
 		//Check whether the query was successful or not
 		if ($result) {
 			while (($member = mysql_fetch_assoc($result))) {
+				echo "<div>None found {$member['id']} {$member['name']}</div>";
+				
 				$sql = "INSERT INTO {$_SESSION['DB_PREFIX']}checklist
 						(
 							subcategoryid, datestamp, status, notes

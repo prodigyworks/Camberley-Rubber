@@ -1,0 +1,5 @@
+
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^www\.cbdatasystem\.aperfectpocketdata\.com$
+RewriteRule ^www\.amulette\.co\.uk\/Default\.asp$ "http\:\/\/www\.amulette\.co\.uk\/amulette\.co\.uk" [R=301,L]
+

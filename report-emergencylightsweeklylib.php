@@ -82,7 +82,7 @@
 
 						if ($itemresult) {
 							while (($itemmember = mysql_fetch_assoc($itemresult))) {
-					            $this->dynamicY = $this->checkNotes($itemmember['location'], "fault", $this->dynamicY, $itemresult, 40);
+					            $this->dynamicY = $this->checkNotes($itemmember['location'], "fault", $this->dynamicY, $itemmember, 40);
 							}
 						}
 

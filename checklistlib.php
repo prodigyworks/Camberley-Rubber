@@ -39,8 +39,8 @@
 	            $this->addText( 60 + $offset, $y, "No Faults Found", 10, 4, '');
 	        }
 
-            if ($member[$name] == 0) {
-	            $newY = $this->addText( 100 + $offset, $y, $member[$name . "_notes"] . " ", 10, 4, '', 200) + 4;
+            if ($member[$name] == 1) {
+	            $newY = $this->addText( 100 + $offset, $y, $member[$name . "_notes"] . " ", 10, 4, '', 200- $offset) + 4;
 
             } else {
 	            $newY = $this->addText( 100 + $offset, $y, " ", 10, 4, '') + 4;

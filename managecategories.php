@@ -80,6 +80,22 @@
 						array(
 							'value'		=> "M",
 							'text'		=> 'Monthly'
+						),
+						array(
+							'value'		=> "6",
+							'text'		=> '6 Monthly'
+						),
+						array(
+							'value'		=> "Y",
+							'text'		=> 'Yearly'
+						),
+						array(
+							'value'		=> "3",
+							'text'		=> '3 Yearly'
+						),
+						array(
+							'value'		=> "5",
+							'text'		=> '5 Yearly'
 						)
 					),
 				'label' 	 => 'Sequence'

@@ -18,7 +18,7 @@ function start_db() {
 	}
 	
 	date_default_timezone_set('Europe/London');	
-	error_reporting(0);
+	error_reporting(E_ERROR);
 
 	if (! isset($_SESSION['PRODIGYWORKS.INI'])) {
 		$_SESSION['PRODIGYWORKS.INI'] = parse_ini_file("prodigyworks.ini");

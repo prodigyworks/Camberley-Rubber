@@ -1,36 +1,36 @@
 <?php
-	require_once('checklistlib.php');
+require_once('checklistlib.php');
 
-	class FireCheckListReport extends CheckListReport {
+class FireCheckListReport extends CheckListReport {
 
-		function getTitle() {
-			return "Fire Extinguishers";
-		}
+	function getTitle() {
+		return "Fire Extinguishers";
+	}
 
-		function __construct($orientation, $metric, $size, $id) {
-			start_db();
+	function __construct($orientation, $metric, $size, $id) {
+		start_db();
 
-	        parent::__construct($orientation, $metric, $size);
+		parent::__construct($orientation, $metric, $size);
 
-			try {
-				$sql = "SELECT A.metacreateduserid, DATE_FORMAT(A.metacreateddate, '%d/%m/%Y %H:%i:%s') AS inspectiondate
+		try {
+			$sql = "SELECT A.metacreateduserid, DATE_FORMAT(A.metacreateddate, '%d/%m/%Y %H:%i:%s') AS inspectiondate
 						FROM {$_SESSION['DB_PREFIX']}fireextinguisherchecklist A
 						WHERE A.checklistid = $id
 						ORDER BY A.id
 						LIMIT 1";
-				$result = mysql_query($sql);
-		
-				if ($result) {
-					while (($member = mysql_fetch_assoc($result))) {
-						$originaldate = $member['inspectiondate'];
-						$originaluserid = $member['metacreateduserid'];
-					}
-					
-				} else {
-					logError("$sql - " . mysql_error());
+			$result = mysql_query($sql);
+
+			if ($result) {
+				while (($member = mysql_fetch_assoc($result))) {
+					$originaldate = $member['inspectiondate'];
+					$originaluserid = $member['metacreateduserid'];
 				}
-				
-				$sql =  "SELECT
+
+			} else {
+				logError("$sql - " . mysql_error());
+			}
+
+			$sql =  "SELECT
 						 A.*,
 						 B.location, B.name AS subcategoryname,
 						 C.name AS categoryname,
@@ -52,66 +52,66 @@
 						 WHERE A.checklistid = $id
 						 ORDER BY A.id DESC
 						 LIMIT 1";
-				$result = mysql_query($sql);
+			$result = mysql_query($sql);
 
-				if ($result) {
-					while (($this->headermember = mysql_fetch_assoc($result))) {
-						$this->dynamicY = $this->newPage();
+			if ($result) {
+				while (($this->headermember = mysql_fetch_assoc($result))) {
+					$this->dynamicY = $this->newPage();
 
-			            $this->addText( 15, 29, "Created Date", 10, 4, 'B');
-						$this->addText( 60, 29, $originaldate, 10, 4, '');
-						$this->addText( 100, 29, "Created By", 10, 4, 'B');
-						$this->addText( 130, 29, $this->headermember['createdbyname'], 10, 4, '');
+					$this->addText( 15, 29, "Created Date", 10, 4, 'B');
+					$this->addText( 60, 29, $originaldate, 10, 4, '');
+					$this->addText( 100, 29, "Created By", 10, 4, 'B');
+					$this->addText( 130, 29, $this->headermember['createdbyname'], 10, 4, '');
 
-			            $this->addText( 15, 34, "Date", 10, 4, 'B');
-						$this->addText( 60, 34, $this->headermember['inspectiondate'], 10, 4, '');
-						$this->addText( 100, 34, "Inspected By", 10, 4, 'B');
-						$this->addText( 130, 34, $this->headermember['fullname'], 10, 4, '');
+					$this->addText( 15, 34, "Date", 10, 4, 'B');
+					$this->addText( 60, 34, $this->headermember['inspectiondate'], 10, 4, '');
+					$this->addText( 100, 34, "Inspected By", 10, 4, 'B');
+					$this->addText( 130, 34, $this->headermember['fullname'], 10, 4, '');
 
-						$this->Line( 15, 39, 195, 39);
+					$this->Line( 15, 39, 195, 39);
 
-						$this->dynamicY = 44;
-						$fireextinguisherchecklistid = $this->headermember['id'];
+					$this->dynamicY = 44;
+					$fireextinguisherchecklistid = $this->headermember['id'];
 
-			            $sql =  "SELECT
+					$sql =  "SELECT
 								 A.*
 								 FROM  {$_SESSION['DB_PREFIX']}fireextinguisherchecklistitem A
 								 WHERE A.fireextinguisherchecklistid = $fireextinguisherchecklistid
 								 ORDER BY A.id";
-						$itemresult = mysql_query($sql);
+					$itemresult = mysql_query($sql);
 
-						if ($itemresult) {
-							while (($itemmember = mysql_fetch_assoc($itemresult))) {
-					            $this->dynamicY = $this->checkNotes($itemmember['location'], "fault", $this->dynamicY, $itemresult, 40);
-							}
-
-						} else {
-							logError($sql . " - " . mysql_error());
+					if ($itemresult) {
+						while (($itemmember = mysql_fetch_assoc($itemresult))) {
+							$this->dynamicY = $this->checkNotes($itemmember['location'], "fault", $this->dynamicY, $itemmember, 30);
 						}
 
-						$this->addText( 15, $this->dynamicY, "Comments", 10, 4, 'B');
-						$this->dynamicY = $this->addText( 100, $this->dynamicY, $this->headermember['comments'], 10, 4, '') + 4;
-
-			            if ($this->headermember['correction_notes'] != null && $this->headermember['correction_notes'] != "") {
-							$this->addText( 15, $this->dynamicY, "Correction Notes", 10, 4, 'B');
-							$this->dynamicY = $this->addText( 100, $this->dynamicY, $this->headermember['correction_notes'], 10, 4, '');
-			            }
-
-			            $this->dynamicY = $this->addText( 15, $this->dynamicY + 10, "SIGNED", 10, 4, 'B') + 2;
-
-
-						$this->DynamicImage($this->headermember['signatureid'], 15, $this->dynamicY, 30);
+					} else {
+						logError($sql . " - " . mysql_error());
 					}
 
-				} else {
-					logError($sql . " - " . mysql_error());
+					$this->addText( 15, $this->dynamicY, "Comments", 10, 4, 'B');
+					$this->dynamicY = $this->addText( 100, $this->dynamicY, $this->headermember['comments'], 10, 4, '') + 4;
+
+					if ($this->headermember['correction_notes'] != null && $this->headermember['correction_notes'] != "") {
+						$this->addText( 15, $this->dynamicY, "Correction Notes", 10, 4, 'B');
+						$this->dynamicY = $this->addText( 100, $this->dynamicY, $this->headermember['correction_notes'], 10, 4, '');
+					}
+
+					$this->dynamicY = $this->addText( 15, $this->dynamicY + 10, "SIGNED", 10, 4, 'B') + 2;
+
+
+					$this->DynamicImage($this->headermember['signatureid'], 15, $this->dynamicY, 30);
 				}
 
-			} catch (Exception $e) {
-				logError($e->getMessage());
+			} else {
+				logError($sql . " - " . mysql_error());
 			}
 
-			$this->AliasNbPages();
+		} catch (Exception $e) {
+			logError($e->getMessage());
 		}
+
+		$this->AliasNbPages();
 	}
+}
 ?>

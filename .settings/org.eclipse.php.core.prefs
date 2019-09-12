@@ -1,3 +1,4 @@
-#Mon Jan 11 14:14:35 GMT 2016
 eclipse.preferences.version=1
 include_path=0;/Camberley Rubber
+phpVersion=php5.6
+use_asp_tags_as_php=false
